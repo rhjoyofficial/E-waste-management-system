@@ -13,6 +13,26 @@ return new class extends Migration
     {
         Schema::create('request_status_logs', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('ewaste_request_id')
+                ->constrained()
+                ->cascadeOnDelete();
+
+            $table->enum('status', [
+                'pending',
+                'approved',
+                'assigned',
+                'collected',
+                'recycled',
+                'rejected'
+            ]);
+
+            $table->foreignId('changed_by')
+                ->nullable() 
+                ->constrained('users')
+                ->nullOnDelete();
+
+            $table->text('remarks')->nullable();
             $table->timestamps();
         });
     }

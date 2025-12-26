@@ -12,5 +12,8 @@ if (!function_exists('flash')) {
             'duration' => $duration,
             'description' => $description
         ]);
+
+        // Also set regular session flash for fallback
+        session()->flash($type, $message);
     }
 }

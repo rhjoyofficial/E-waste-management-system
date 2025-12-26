@@ -31,7 +31,7 @@
         <div class="flex items-center justify-between mb-6">
             <label for="remember_me" class="flex items-center">
                 <input id="remember_me" type="checkbox" name="remember"
-                    class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-green-500">
+                    class="rounded border-gray-300 text-green-600 shadow-sm focus:ring-0 focus:ring-offset-0">
                 <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
             </label>
 

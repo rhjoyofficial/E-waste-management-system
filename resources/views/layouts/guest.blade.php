@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/favicon.png') }}">
 
     <title>
         @hasSection('title')
@@ -31,21 +32,15 @@
         <!-- Logo -->
         <div class="w-full sm:max-w-md mt-6 px-6 py-4">
             <a href="{{ url('/') }}" class="flex justify-center">
-                <div class="flex items-center space-x-3">
-                    <div class="h-12 w-12 bg-green-500 rounded-lg flex items-center justify-center">
-                        <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd"
-                                d="M3 6a3 3 0 013-3h10a1 1 0 01.8 1.6L14.25 8l2.55 3.4A1 1 0 0116 13H6a1 1 0 00-1 1v3a1 1 0 11-2 0V6z"
-                                clip-rule="evenodd" />
-                        </svg>
-                    </div>
-                    <span class="text-2xl font-bold text-gray-800">E-Waste Management</span>
+                <div class="flex flex-col items-center space-y-2">
+                    <img src="{{ asset('images/recycle.png') }}" alt="E-Waste Logo" class="h-20 w-20 object-cover">
+                    <span class="text-2xl font-bold text-gray-800 text-center">E-Waste Management</span>
                 </div>
             </a>
         </div>
 
         <!-- Card Container -->
-        <div class="w-full sm:max-w-lg mt-6 px-6 py-4">
+        <div class="w-full sm:max-w-lg mt-2 px-6 py-4">
             <!-- Authentication Card -->
             <div class="bg-white shadow-md rounded-lg overflow-hidden">
                 <!-- Card Header -->

@@ -49,6 +49,15 @@ class LoginRequest extends FormRequest
             ]);
         }
 
+        // Check if user is active
+        $user = Auth::user();
+        if (!$user->is_active) {
+            Auth::logout();
+            throw ValidationException::withMessages([
+                'email' => 'Your account has been deactivated. Please contact administrator.',
+            ]);
+        }
+
         RateLimiter::clear($this->throttleKey());
     }
 
@@ -80,6 +89,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('email')) . '|' . $this->ip());
     }
 }

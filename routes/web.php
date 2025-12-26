@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\ProfileController;
+
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\EwasteRequestController as AdminEwasteRequestController;
@@ -13,113 +16,76 @@ use App\Http\Controllers\User\EwasteRequestController as UserEwasteRequestContro
 
 /*
 |--------------------------------------------------------------------------
-| Public Routes
+| Web Routes
 |--------------------------------------------------------------------------
 */
 
+// Public Routes
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('dashboard');
 });
 
-/*
-|--------------------------------------------------------------------------
-| Authenticated Redirect
-|--------------------------------------------------------------------------
-*/
 
-Route::middleware(['auth'])->get('/dashboard', function () {
-    $user = auth()->user();
+// Authentication Routes
+require __DIR__ . '/auth.php';
 
-    if ($user->hasRole('admin')) {
-        return redirect()->route('admin.dashboard');
-    }
+// Authenticated Routes
+Route::middleware(['auth'])->group(function () {
 
-    if ($user->hasRole('collector')) {
-        return redirect()->route('collector.dashboard');
-    }
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
 
-    return redirect()->route('user.dashboard');
-})->name('dashboard');
+    // Dashboard Redirect
+    Route::get('/dashboard', function () {
+        $user = auth()->user();
 
-/*
-|--------------------------------------------------------------------------
-| Admin Routes
-|--------------------------------------------------------------------------
-*/
+        if ($user->isAdmin()) {
+            return redirect()->route('admin.dashboard');
+        }
 
-Route::middleware(['auth', 'admin'])
-    ->prefix('admin')
-    ->as('admin.')
-    ->group(function () {
+        if ($user->isCollector()) {
+            return redirect()->route('collector.dashboard');
+        }
 
+        return redirect()->route('user.dashboard');
+    })->name('dashboard');
+
+    // Admin Routes
+    Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function () {
         // Dashboard
-        Route::get('/dashboard', [AdminDashboardController::class, 'index'])
-            ->name('dashboard');
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
-        // Category Management
-        Route::resource('categories', AdminCategoryController::class)
-            ->except(['show']);
+        // Categories
+        Route::resource('categories', AdminCategoryController::class);
+        Route::patch('categories/{category}/toggle-status', [AdminCategoryController::class, 'toggleStatus'])->name('categories.toggle-status');
 
         // E-Waste Requests
-        Route::get('requests', [AdminEwasteRequestController::class, 'index'])
-            ->name('requests.index');
-
-        Route::get('requests/{id}', [AdminEwasteRequestController::class, 'show'])
-            ->name('requests.show');
-
-        Route::post('requests/{id}/assign', [AdminEwasteRequestController::class, 'assignCollector'])
-            ->name('requests.assign');
-
-        Route::post('requests/{id}/status', [AdminEwasteRequestController::class, 'updateStatus'])
-            ->name('requests.status');
+        Route::get('requests', [AdminEwasteRequestController::class, 'index'])->name('requests.index');
+        Route::get('requests/{ewaste_request}', [AdminEwasteRequestController::class, 'show'])->name('requests.show');
+        Route::post('requests/{ewaste_request}/assign', [AdminEwasteRequestController::class, 'assignCollector'])->name('requests.assign');
+        Route::post('requests/{ewaste_request}/status', [AdminEwasteRequestController::class, 'updateStatus'])->name('requests.status');
+        Route::post('requests/{ewaste_request}/remark', [AdminEwasteRequestController::class, 'updateRemark'])->name('requests.remark');
     });
 
-/*
-|--------------------------------------------------------------------------
-| Collector Routes
-|--------------------------------------------------------------------------
-*/
+    // Collector Routes
+    Route::get('collector/requests/{ewaste_request}/details', [CollectorEwasteRequestController::class, 'showDetails'])->name('collector.requests.details');
 
-Route::middleware(['auth', 'collector'])
-    ->prefix('collector')
-    ->as('collector.')
-    ->group(function () {
-
+    Route::middleware(['collector'])->prefix('collector')->name('collector.')->group(function () {
         // Dashboard
-        Route::get('/dashboard', [CollectorDashboardController::class, 'index'])
-            ->name('dashboard');
+        Route::get('/dashboard', [CollectorDashboardController::class, 'index'])->name('dashboard');
 
         // Assigned Requests
-        Route::get('requests', [CollectorEwasteRequestController::class, 'index'])
-            ->name('requests.index');
-
-        Route::post('requests/{id}/collect', [CollectorEwasteRequestController::class, 'markCollected'])
-            ->name('requests.collect');
+        Route::get('requests', [CollectorEwasteRequestController::class, 'index'])->name('requests.index');
+        Route::post('requests/{ewaste_request}/collect', [CollectorEwasteRequestController::class, 'markCollected'])->name('requests.collect');
+        Route::post('requests/{ewaste_request}/remark', [CollectorEwasteRequestController::class, 'updateRemark'])->name('requests.remark');
     });
 
-/*
-|--------------------------------------------------------------------------
-| User (Citizen) Routes
-|--------------------------------------------------------------------------
-*/
-
-Route::middleware(['auth'])
-    ->prefix('user')
-    ->as('user.')
-    ->group(function () {
-
+    // User (Citizen) Routes
+    Route::prefix('user')->name('user.')->group(function () {
         // Dashboard
-        Route::get('/dashboard', [UserDashboardController::class, 'index'])
-            ->name('dashboard');
+        Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
 
-        // E-Waste Requests CRUD
+        // E-Waste Requests
         Route::resource('requests', UserEwasteRequestController::class);
+        Route::post('requests/{ewaste_request}/cancel', [UserEwasteRequestController::class, 'cancel'])->name('requests.cancel');
     });
-
-/*
-|--------------------------------------------------------------------------
-| Auth Routes (Laravel Breeze)
-|--------------------------------------------------------------------------
-*/
-
-require __DIR__ . '/auth.php';
+});
