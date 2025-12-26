@@ -28,4 +28,11 @@ class DashboardController extends Controller
 
         return view('user.dashboard', compact('stats', 'recentRequests'));
     }
+    /**
+     * Display awareness/guidelines page
+     */
+    public function awareness()
+    {
+        return view('user.awareness');
+    }
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\EwasteRequestController as AdminEwasteRequestController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 
 use App\Http\Controllers\Collector\DashboardController as CollectorDashboardController;
 use App\Http\Controllers\Collector\EwasteRequestController as CollectorEwasteRequestController;
@@ -32,7 +33,15 @@ require __DIR__ . '/auth.php';
 // Authenticated Routes
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    // Profile Routes (accessible by all authenticated users)
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::put('/profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+    });
+
+    // User awareness route (add to user group)
+    Route::get('awareness', [UserDashboardController::class, 'awareness'])->name('user.awareness');
 
     // Dashboard Redirect
     Route::get('/dashboard', function () {
@@ -64,6 +73,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('requests/{ewaste_request}/assign', [AdminEwasteRequestController::class, 'assignCollector'])->name('requests.assign');
         Route::post('requests/{ewaste_request}/status', [AdminEwasteRequestController::class, 'updateStatus'])->name('requests.status');
         Route::post('requests/{ewaste_request}/remark', [AdminEwasteRequestController::class, 'updateRemark'])->name('requests.remark');
+        // Users Management
+        Route::resource('users', AdminUserController::class)->except(['create', 'store']);
+        Route::patch('users/{user}/toggle-status', [AdminUserController::class, 'toggleStatus'])->name('users.toggle-status');
+        Route::post('users/{user}/assign-role', [AdminUserController::class, 'assignRole'])->name('users.assign-role');
     });
 
     // Collector Routes

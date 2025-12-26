@@ -23,6 +23,12 @@
                         class="{{ request()->routeIs('admin.categories.*') ? 'border-green-300 text-white' : 'border-transparent text-green-100 hover:text-white' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                         <i class="fas fa-tags mr-2"></i>Categories
                     </a>
+                    <!-- user management link -->
+                    <a href="{{ route('admin.users.index') }}"
+                        class="{{ request()->routeIs('admin.users.*') ? 'border-green-300 text-white' : 'border-transparent text-green-100 hover:text-white' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        <i class="fas fa-users mr-2"></i>Users
+                    </a>
+
                 </div>
             </div>
 

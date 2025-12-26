@@ -23,6 +23,10 @@
                         class="{{ request()->routeIs('user.requests.create') ? 'border-green-300 text-white' : 'border-transparent text-gray-300 hover:text-white' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                         <i class="fas fa-plus-circle mr-2"></i>New Request
                     </a>
+                    <a href="{{ route('user.awareness') }}"
+                        class="{{ request()->routeIs('user.awareness') ? 'border-green-300 text-white' : 'border-transparent text-gray-300 hover:text-white' }} inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        <i class="fas fa-info-circle mr-2"></i>Awareness
+                    </a>
                 </div>
             </div>
 
