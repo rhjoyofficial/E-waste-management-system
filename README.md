@@ -1,59 +1,405 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🌱 E-Waste Management System (Laravel)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A comprehensive web application for managing electronic waste disposal with role-based access control for administrators, collectors, and citizens.
 
-## About Laravel
+## 📋 Table of Contents
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Database Structure](#database-structure)
+- [User Roles](#user-roles)
+- [API Documentation](#api-documentation)
+- [Screenshots](#screenshots)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [License](#license)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## ✨ Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 👤 **User (Citizen) Features**
+- ✅ Dashboard with request statistics
+- ✅ Submit e-waste pickup requests
+- ✅ Track request status in real-time
+- ✅ View/Edit/Cancel pending requests
+- ✅ Awareness & guidelines page
+- ✅ Profile management
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 🚛 **Collector Features**
+- ✅ Dashboard with assigned pickups
+- ✅ View today's pickup schedule
+- ✅ Mark requests as collected
+- ✅ Add collection remarks
+- ✅ View pickup details
 
-## Learning Laravel
+### 🛠️ **Admin Features**
+- ✅ Comprehensive dashboard with analytics
+- ✅ Manage device categories
+- ✅ Approve/Reject pickup requests
+- ✅ Assign collectors to requests
+- ✅ User management (activate/deactivate)
+- ✅ Role assignment (User ↔ Collector)
+- ✅ Request status updates
+- ✅ Reports and insights
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+### 🔐 **System Features**
+- ✅ Role-based authentication (3 roles)
+- ✅ Secure password management
+- ✅ Email verification (optional)
+- ✅ Real-time notifications
+- ✅ Flash message system
+- ✅ Mobile-responsive design
+- ✅ Form validation
+- ✅ CSRF protection
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🛠️ Tech Stack
 
-## Laravel Sponsors
+**Backend:**
+- Laravel 10.x
+- PHP 8.1+
+- MySQL/PostgreSQL
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+**Frontend:**
+- Tailwind CSS 3.x
+- Vanilla JavaScript
+- Alpine.js for interactivity
+- Font Awesome icons
 
-### Premium Partners
+**Development Tools:**
+- Composer (PHP dependency management)
+- NPM (Frontend dependencies)
+- Git (Version control)
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## 🚀 Installation
 
-## Contributing
+### Prerequisites
+- PHP 8.1 or higher
+- Composer
+- Node.js & NPM
+- MySQL 5.7+ or PostgreSQL
+- Web server (Apache/Nginx)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Step-by-Step Installation
 
-## Code of Conduct
+1. **Clone the repository**
+```bash
+git clone https://github.com/yourusername/ewaste-management-system.git
+cd ewaste-management-system
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+2. **Install PHP dependencies**
+```bash
+composer install
+```
 
-## Security Vulnerabilities
+3. **Install JavaScript dependencies**
+```bash
+npm install
+npm run build
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+4. **Configure environment**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## License
+5. **Update .env file**
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=ewaste_db
+DB_USERNAME=root
+DB_PASSWORD=
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+APP_NAME="E-Waste Management"
+APP_URL=http://localhost:8000
+```
+
+6. **Run migrations and seeders**
+```bash
+php artisan migrate --seed
+```
+
+7. **Start development server**
+```bash
+php artisan serve
+```
+
+Visit `http://localhost:8000` in your browser.
+
+## ⚙️ Configuration
+
+### Default Login Credentials
+- **Admin**: `admin@ewaste.com` / `password`
+- **Collector**: `collector@ewaste.com` / `password`
+- **User**: `user@ewaste.com` / `password`
+
+### Email Configuration (Optional)
+```env
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=your-email@gmail.com
+MAIL_PASSWORD=your-app-password
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS="noreply@ewaste.com"
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
+### File Upload (Optional for profile pictures)
+```env
+FILESYSTEM_DISK=public
+```
+
+## 🗄️ Database Structure
+
+### Core Tables
+1. **users** - User accounts with roles
+2. **roles** - Available roles (admin, collector, user)
+3. **role_user** - User-role relationships
+4. **categories** - E-waste device categories
+5. **ewaste_requests** - Pickup requests
+6. **request_status_logs** - Request status history
+
+### Database Schema
+```sql
+-- Sample schema visualization
+users
+├── id
+├── name
+├── email
+├── password
+├── phone
+├── address
+├── is_active
+├── last_login_at
+└── timestamps
+
+roles
+├── id
+├── name (admin, collector, user)
+└── timestamps
+
+ewaste_requests
+├── id
+├── user_id
+├── collector_id (nullable)
+├── category_id
+├── device_condition
+├── quantity
+├── pickup_address
+├── preferred_pickup_date
+├── status (pending, approved, assigned, collected, recycled, rejected)
+├── user_note
+├── admin_remark
+├── collector_remark
+└── timestamps
+```
+
+## 👥 User Roles
+
+### 1. **Admin**
+- Full system access
+- Manage all users and roles
+- Approve/reject requests
+- Assign collectors
+- View reports and analytics
+
+### 2. **Collector**
+- View assigned pickups
+- Update pickup status
+- Add collection remarks
+- View pickup details
+- Cannot delete/edit requests
+
+### 3. **User (Citizen)**
+- Submit pickup requests
+- Track request status
+- View/Edit/Cancel pending requests
+- Access awareness materials
+- Update profile
+
+## 📊 API Documentation
+
+### Authentication Endpoints
+```
+POST    /login           - User login
+POST    /register        - User registration
+POST    /logout          - User logout
+POST    /forgot-password - Password reset request
+```
+
+### User Endpoints
+```
+GET     /user/dashboard           - User dashboard
+GET     /user/awareness           - Awareness page
+GET     /user/requests            - List user requests
+POST    /user/requests            - Create new request
+GET     /user/requests/{id}       - View request
+PUT     /user/requests/{id}       - Update request
+DELETE  /user/requests/{id}       - Delete request
+GET     /profile                  - Edit profile
+PUT     /profile                  - Update profile
+PUT     /profile/password         - Change password
+```
+
+### Collector Endpoints
+```
+GET     /collector/dashboard      - Collector dashboard
+GET     /collector/requests       - Assigned requests
+POST    /collector/requests/{id}/collect - Mark as collected
+GET     /collector/requests/{id}/details - Request details
+```
+
+### Admin Endpoints
+```
+GET     /admin/dashboard          - Admin dashboard
+GET     /admin/categories         - List categories
+POST    /admin/categories         - Create category
+PUT     /admin/categories/{id}    - Update category
+DELETE  /admin/categories/{id}    - Delete category
+GET     /admin/requests           - All requests
+GET     /admin/requests/{id}      - Request details
+POST    /admin/requests/{id}/assign - Assign collector
+POST    /admin/requests/{id}/status - Update status
+GET     /admin/users              - List users
+PUT     /admin/users/{id}         - Update user
+DELETE  /admin/users/{id}         - Delete user
+POST    /admin/users/{id}/assign-role - Assign role
+```
+
+## 📸 Screenshots
+
+### Dashboard Views
+| Admin Dashboard | Collector Dashboard | User Dashboard |
+|----------------|-------------------|---------------|
+| ![Admin Dashboard](screenshots/admin-dashboard.png) | ![Collector Dashboard](screenshots/collector-dashboard.png) | ![User Dashboard](screenshots/user-dashboard.png) |
+
+### Key Pages
+| Login Page | Request Form | User Management |
+|-----------|-------------|----------------|
+| ![Login](screenshots/login.png) | ![Request Form](screenshots/request-form.png) | ![User Management](screenshots/user-management.png) |
+
+## 🧪 Testing
+
+### Run Tests
+```bash
+# Unit tests
+php artisan test
+
+# Feature tests
+php artisan test --testsuite=Feature
+
+# Specific test
+php artisan test --filter=UserRegistrationTest
+```
+
+### Test Coverage
+- Authentication tests
+- Role permission tests
+- Request flow tests
+- Form validation tests
+- Database relationship tests
+
+## 🚢 Deployment
+
+### Production Requirements
+1. Secure server (HTTPS)
+2. Database backups
+3. Environment optimization
+4. Monitoring setup
+
+### Deployment Steps
+```bash
+# 1. Clone on server
+git clone https://github.com/yourusername/ewaste-management-system.git
+
+# 2. Install dependencies
+composer install --optimize-autoloader --no-dev
+npm install --production
+npm run build
+
+# 3. Set permissions
+chmod -R 775 storage bootstrap/cache
+
+# 4. Optimize
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+
+# 5. Set up supervisor for queues (if using)
+# 6. Configure cron jobs
+```
+
+### Environment Variables for Production
+```env
+APP_ENV=production
+APP_DEBUG=false
+APP_URL=https://yourdomain.com
+
+# Database
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=production_db
+DB_USERNAME=secure_user
+DB_PASSWORD=strong_password
+
+# Security
+SESSION_DRIVER=database
+SESSION_LIFETIME=120
+```
+
+## 🤝 Contributing
+
+1. **Fork the repository**
+2. **Create a feature branch**
+```bash
+git checkout -b feature/amazing-feature
+```
+3. **Commit your changes**
+```bash
+git commit -m 'Add some amazing feature'
+```
+4. **Push to the branch**
+```bash
+git push origin feature/amazing-feature
+```
+5. **Open a Pull Request**
+
+### Development Guidelines
+- Follow PSR-12 coding standards
+- Write tests for new features
+- Update documentation
+- Use meaningful commit messages
+- Keep code clean and maintainable
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Laravel Framework
+- Tailwind CSS
+- Font Awesome
+- All contributors
+
+## 📞 Support
+
+For support, email: support@ewaste.com or open an issue in the GitHub repository.
+
+## 🌍 Environmental Impact
+
+This system helps promote proper e-waste disposal, contributing to:
+- Reduced environmental pollution
+- Conservation of natural resources
+- Prevention of toxic material leakage
+- Promotion of the circular economy
+
+**Made with ❤️ for a cleaner planet**
+
+*Remember: Every device recycled is a step towards a greener Earth!*
